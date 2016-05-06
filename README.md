@@ -50,8 +50,25 @@ var myButton: Button = _
 These variables are bound to the widget objects created when the FXML template is evaluated at
 runtime.
 
+With this in mind, the workflow is similar to the one used in the [FXML tutorial in
+Java](http://docs.oracle.com/javafx/2/get_started/fxml_tutorial.htm), with the caveat that you might
+find useful to add and call a `postInitialize` method on **ModelController** to pass the stage and
+the scene to ModelController or anything else that you want to wire in your ModelController so it
+can do useful things with the events coming from the GUI:
 
-In Part 2, we will show how to make our applications reactive and show more detailed code examples.
+So in our overriden Application.start we will do:
+```
+// Get the fxml file
+val fxmlUrl = getClass.getResource("/view.fxml")
+val fXMLLoader: FXMLLoader = new FXMLLoader(fxmlUrl)
+  ..  fXMLLoader.load()
+[...]
+val modelController = fXMLLoader.getController.asInstanceOf[ModelController]
+modelController.postInitialize(stage, scene, ...)
+```
+
+
+In Part 2, we will show how to make our applications reactive and show a full example.
 
 
 ## Links
